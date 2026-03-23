@@ -28,6 +28,17 @@ describe('TransactionsResource', () => {
     await expect(client.transactions.getById('0.0.1234')).rejects.toThrow(ValidationError);
   });
 
+  it('should throw ValidationError when API returns empty transactions array', async () => {
+    const client = new HieroClient({
+      baseUrl: Networks.testnet,
+      fetch: fixtures.createMockFetch({ transactions: [] }),
+    });
+
+    await expect(
+      client.transactions.getById('0.0.1234-1234567890-000000001'),
+    ).rejects.toThrow(ValidationError);
+  });
+
   it('should list transactions', async () => {
     const client = new HieroClient({
       baseUrl: Networks.testnet,

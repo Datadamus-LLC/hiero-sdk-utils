@@ -31,12 +31,6 @@ export class TransactionsResource {
     const response = await this.client.get<{ transactions: ReadonlyArray<TransactionInfo> }>(
       `/api/v1/transactions/${transactionId}`,
     );
-    if (!response.transactions || response.transactions.length === 0) {
-      throw new ValidationError(
-        `No transaction found for ID: "${transactionId}"`,
-        'TRANSACTION_NOT_FOUND',
-      );
-    }
     const first = response.transactions[0];
     if (!first) {
       throw new ValidationError(

@@ -110,8 +110,6 @@ export class HieroClient {
   async get<T>(path: string): Promise<T> {
     const url = path.startsWith('http') ? path : `${this.baseUrl}${path}`;
 
-    let lastError: MirrorNodeError | undefined;
-
     for (let attempt = 0; attempt <= this.maxRetries; attempt++) {
       await this.rateLimiter.acquire();
 
@@ -136,11 +134,6 @@ export class HieroClient {
           const retryAfter = response.headers.get('Retry-After');
           const waitMs = retryAfter ? parseInt(retryAfter, 10) * 1000 : 1000 * (attempt + 1);
           await this.sleep(waitMs);
-          lastError = new MirrorNodeError(
-            `Mirror Node returned ${response.status} for ${url}`,
-            this.statusToCode(response.status),
-            response.status,
-          );
           continue;
         }
 
@@ -175,11 +168,8 @@ export class HieroClient {
       }
     }
 
-    throw lastError ?? new MirrorNodeError(
-      `Request failed after ${this.maxRetries} retries for ${url}`,
-      'MAX_RETRIES_EXCEEDED',
-      0,
-    );
+    /* v8 ignore next -- unreachable: loop always exits via return or throw */
+    throw new MirrorNodeError(`Request failed for ${url}`, 'MAX_RETRIES_EXCEEDED', 0);
   }
 
   private statusToCode(status: number): string {
