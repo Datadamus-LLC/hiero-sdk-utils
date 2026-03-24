@@ -29,20 +29,26 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Type check
-        run: npm run typecheck
+      - name: Typecheck all packages
+        run: npm run typecheck --workspaces --if-present
 
-      - name: Lint
-        run: npm run lint
+      - name: Lint all packages
+        run: npm run lint --workspaces --if-present
 
-      - name: Unit tests
-        run: npm run test:unit
+      - name: Core unit tests
+        run: npm run test:unit --workspace packages/core
 
-      - name: Integration tests
-        run: npm run test:integration
+      - name: Core integration tests
+        run: npm run test:integration --workspace packages/core
 
-      - name: Build
-        run: npm run build
+      - name: React package tests
+        run: npm run test --workspace packages/react
 
-      - name: Verify package
-        run: npm pack --dry-run
+      - name: Build all packages
+        run: npm run build --workspaces --if-present
+
+      - name: Verify core package
+        run: npm pack --dry-run --workspace packages/core
+
+      - name: Verify react package
+        run: npm pack --dry-run --workspace packages/react
