@@ -1,0 +1,53 @@
+{
+  "name": "hiero-sdk-utils-react",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "React hooks for the Hedera/Hiero Mirror Node — built on hiero-sdk-utils",
+  "main": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      }
+    }
+  },
+  "files": ["dist/"],
+  "engines": { "node": ">=18.0.0" },
+  "scripts": {
+    "build":          "tsc -p tsconfig.json",
+    "test":           "vitest run",
+    "lint":           "eslint src/ tests/ --max-warnings 0",
+    "typecheck":      "tsc --noEmit",
+    "prepublishOnly": "npm run typecheck && npm run lint && npm run test && npm run build"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "hiero-sdk-utils": ">=0.1.0"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^14.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.57.0",
+    "jsdom": "^24.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "typescript": "^5.4.0",
+    "vitest": "^1.6.0"
+  },
+  "publishConfig": { "access": "public" },
+  "license": "Apache-2.0",
+  "author": "Dmitrij Titarenko <dtytarenko666@gmail.com>",
+  "homepage": "https://github.com/dmitrijtitarenko/hiero-sdk-utils#readme",
+  "bugs": { "url": "https://github.com/dmitrijtitarenko/hiero-sdk-utils/issues" },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dmitrijtitarenko/hiero-sdk-utils.git",
+    "directory": "packages/react"
+  },
+  "keywords": ["hedera", "hiero", "mirror-node", "react", "hooks", "blockchain"]
+}

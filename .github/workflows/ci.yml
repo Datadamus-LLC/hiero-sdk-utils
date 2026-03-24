@@ -29,6 +29,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Build core (required before typechecking react)
+        run: npm run build --workspace packages/core
+
       - name: Typecheck all packages
         run: npm run typecheck --workspaces --if-present
 
@@ -44,8 +47,8 @@ jobs:
       - name: React package tests
         run: npm run test --workspace packages/react
 
-      - name: Build all packages
-        run: npm run build --workspaces --if-present
+      - name: Build react package
+        run: npm run build --workspace packages/react
 
       - name: Verify core package
         run: npm pack --dry-run --workspace packages/core
