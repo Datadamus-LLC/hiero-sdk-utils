@@ -27,7 +27,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm install --no-audit
+        run: npm install --no-package-lock --no-audit
 
       - name: Build core (required before typechecking react)
         run: npm run build --workspace packages/core
